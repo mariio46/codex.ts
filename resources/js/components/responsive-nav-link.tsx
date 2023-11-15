@@ -1,5 +1,5 @@
-import { InertiaLinkProps, Link } from '@inertiajs/react';
 import { cn } from '@/lib/utils';
+import { InertiaLinkProps, Link } from '@inertiajs/react';
 import * as icons from '@tabler/icons-react';
 import { Icon } from './icons';
 

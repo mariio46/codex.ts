@@ -1,3 +1,4 @@
+import { Icon } from '@/components/icons';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,10 +10,9 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Icon } from '@/components/icons';
 import * as icons from '@tabler/icons-react';
-import { DropdownMenuItem } from './ui/dropdown-menu';
 import { buttonVariants } from './ui/button';
+import { DropdownMenuItem } from './ui/dropdown-menu';
 
 interface Props {
     trigger_text: string;

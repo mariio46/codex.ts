@@ -1,5 +1,5 @@
-import { InertiaLinkProps, Link } from '@inertiajs/react';
 import { cn } from '@/lib/utils';
+import { InertiaLinkProps, Link } from '@inertiajs/react';
 
 export default function NavLink({ className, active = false, ...props }: InertiaLinkProps & { active?: boolean }) {
     return (

@@ -1,7 +1,7 @@
+import { cn } from '@/lib/utils';
 import * as icons from '@tabler/icons-react';
 import { TablerIconsProps } from '@tabler/icons-react';
 import React from 'react';
-import { cn } from '@/lib/utils';
 
 interface IconProps extends TablerIconsProps {
     name: keyof typeof icons;

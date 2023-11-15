@@ -1,23 +1,12 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader } from '@/components/ui/sheet';
+import { PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import ApplicationLogo from './app-logo';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { PageProps } from '@/types';
-import Menu from './responsive-nav-menu';
 import { Icon } from './icons';
+import Menu from './responsive-nav-menu';
 import { ThemeToggle } from './theme-toggle';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 export interface NavProps {
     open: boolean;

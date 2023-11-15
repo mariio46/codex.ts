@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import { IconCheck } from '@tabler/icons-react';
 import { PropsWithChildren } from 'react';
 
 export function SideNavigations({

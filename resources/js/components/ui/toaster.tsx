@@ -1,7 +1,7 @@
 import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-import { Icon } from '../icons';
 import { cn } from '@/lib/utils';
+import { Icon } from '../icons';
 
 export function Toaster() {
     const { toasts } = useToast();

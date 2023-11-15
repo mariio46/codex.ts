@@ -1,9 +1,9 @@
-import { Fragment, useState } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from './ui/button';
+import { Listbox, Transition } from '@headlessui/react';
 import { IconSelector, IconX } from '@tabler/icons-react';
+import { Fragment, useState } from 'react';
 import { Icon } from './icons';
+import { buttonVariants } from './ui/button';
 
 export default function SelectMultiples({
     data,

@@ -1,8 +1,8 @@
+import { FlashProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { Toaster } from './ui/toaster';
 import { useToast } from './ui/use-toast';
-import { FlashProps } from '@/types';
 
 export default function ToastNotifications() {
     const { session_flash } = usePage<FlashProps>().props;
