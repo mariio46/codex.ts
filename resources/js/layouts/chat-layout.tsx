@@ -1,3 +1,15 @@
+import { Icon } from '@/components/icons';
+import {
+    Profile,
+    ProfileAdditional,
+    ProfileAvatar,
+    ProfileContent,
+    ProfileFallback,
+    ProfileHeader,
+    ProfileImage,
+    ProfileName,
+} from '@/components/profile-block';
+import { useTheme } from '@/components/theme-provider';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -12,24 +24,11 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-import { Icon } from '@/components/icons';
-import {
-    Profile,
-    ProfileAdditional,
-    ProfileAvatar,
-    ProfileContent,
-    ProfileFallback,
-    ProfileHeader,
-    ProfileImage,
-    ProfileName,
-} from '@/components/profile-block';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { PageProps, UserType } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
-import { useTheme } from '@/components/theme-provider';
 
 function ProfileBlockChat({
     avatar,
@@ -72,8 +71,8 @@ function DropdownMenuChat() {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger>
-                <Icon name='IconDotsVertical' className='h-[1.15rem] w-[1.15rem]' />
+            <DropdownMenuTrigger className='focus:outline-none'>
+                <Icon name='IconMenuDeep' className='h-[1.15rem] w-[1.15rem]' />
             </DropdownMenuTrigger>
             <DropdownMenuContent align='start' className='mt-2 w-[200px] space-y-1'>
                 <DropdownMenuLabel>
@@ -154,9 +153,11 @@ export default function ChatLayout({
             <Head title={title} />
             <nav className='w-1/4'>
                 <div className='simple-scrollbar fixed flex h-full w-1/4 flex-col border-r'>
-                    <div className='flex items-center justify-between px-5 py-5'>
-                        <h1 className='text-xl font-bold'>Chats</h1>
-                        <DropdownMenuChat />
+                    <div className='px-5 py-5'>
+                        <div className='flex items-center justify-between'>
+                            <h1 className='text-xl font-bold'>Chats</h1>
+                            <DropdownMenuChat />
+                        </div>
                     </div>
                     <div className='flex-1 overflow-y-auto'>
                         {users.map((user: UserType, i: number) => (

@@ -6,7 +6,6 @@ use App\Http\Resources\AuthenticatedUserResoure;
 use App\Http\Resources\UsersGlobalResource;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -21,7 +20,9 @@ class HandleInertiaRequests extends Middleware
 
     public function share(Request $request): array
     {
-        $users = User::query()->where('id', '!=', $request->user()?->id)->select('id', 'uuid', 'name', 'username', 'email')->get();
+        $users = $request->user()
+            ? User::query()->where('id', '!=', $request->user()->id)->select('id', 'uuid', 'name', 'username', 'email')->get()
+            : null;
 
         return [
             ...parent::share($request),
@@ -40,7 +41,6 @@ class HandleInertiaRequests extends Middleware
                 'className' => $request->session()->get('className'),
             ],
             'users' => $request->user() ? fn () => UsersGlobalResource::collection($users) : null,
-            // 'users' =>  Cache::remember('categories', 3600, fn () => \App\Models\User::query()->where('id', '!=', $request->user()->id)->get()),
         ];
     }
 }
