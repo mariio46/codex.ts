@@ -32,7 +32,7 @@ class MessageSent implements ShouldBroadcast
     {
         return [
             // new Channel('chats'),
-            new PrivateChannel('chats.' . $this->chat->receiver_id),
+            new PrivateChannel('chats.' . $this->chat->receiver->uuid),
         ];
     }
 }

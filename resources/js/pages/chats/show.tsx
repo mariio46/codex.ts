@@ -15,7 +15,12 @@ import ChatLayout from '@/layouts/chat-layout';
 import { cn } from '@/lib/utils';
 import { PageProps, UserType } from '@/types';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler, useEffect, useRef } from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
+
+interface TypingIndicatorType {
+    typing: boolean;
+    setTyping: (typing: boolean) => void;
+}
 
 interface ChatType {
     id: number;
@@ -63,16 +68,29 @@ function ChatDropdownMenu() {
     );
 }
 
-function ChatTopNavigation({ user }: { user: UserType }) {
+function ChatTopNavigation({ user, typing, setTyping }: { user: UserType } & TypingIndicatorType) {
     return (
-        <div className='flex items-center justify-between'>
-            <h2 className='text-xl font-bold'>{user.name}</h2>
-            <ChatDropdownMenu />
+        <div>
+            <div className='flex items-center justify-between'>
+                <h2 className='text-xl font-bold'>{user.name}</h2>
+                <ChatDropdownMenu />
+            </div>
+            {typing && <p className='animate-pulse text-xs font-semibold text-green-500'>typing...</p>}
         </div>
     );
 }
 
-function ChatBottomForm({ user, scrollRef, focusRef }: { user: UserType; scrollRef: any; focusRef: any }) {
+function ChatBottomForm({
+    user,
+    scrollRef,
+    focusRef,
+    onTyping,
+}: {
+    user: UserType;
+    scrollRef: any;
+    focusRef: any;
+    onTyping: any;
+}) {
     const { data, setData, processing, reset, post } = useForm({
         message: '',
     });
@@ -89,6 +107,7 @@ function ChatBottomForm({ user, scrollRef, focusRef }: { user: UserType; scrollR
         <form onSubmit={submit}>
             <div className='flex items-center gap-x-2'>
                 <Input
+                    onKeyUp={onTyping}
                     ref={focusRef}
                     value={data.message}
                     onChange={(e) => setData('message', e.target.value)}
@@ -110,6 +129,7 @@ function ChatBottomForm({ user, scrollRef, focusRef }: { user: UserType; scrollR
 
 export default function ChatShow({ user, chats }: { user: UserType; chats: ChatType[] }) {
     const { auth, errors } = usePage<PageProps>().props;
+    const [typing, setTyping] = useState(false);
     const chatRoomScrollRef = useRef<HTMLDivElement>(null);
     const messageFocusRef = useRef<HTMLInputElement>(null);
     const { toast } = useToast();
@@ -123,14 +143,26 @@ export default function ChatShow({ user, chats }: { user: UserType; chats: ChatT
         }
     };
 
-    Echo.private('chats.' + auth.user.id).listen('MessageSent', ({ chat }: { chat: ChatType }) => {
-        router.reload({
-            preserveScroll: true,
-            onSuccess: () => {
-                chatRoomScrollRef?.current?.scrollTo(0, 9999999);
-            },
+    const onTyping = () => {
+        setTimeout(() => {
+            Echo.private(`chats.${user.uuid}`).whisper('typing', { name: user.name });
+        }, 500);
+    };
+
+    Echo.private('chats.' + auth.user.uuid)
+        .listenForWhisper('typing', (e: any) => {
+            setTyping(true);
+            setTimeout(() => setTyping(false), 5000);
+        })
+        .listen('MessageSent', ({ chat }: { chat: ChatType }) => {
+            router.reload({
+                preserveScroll: true,
+                onSuccess: () => {
+                    chatRoomScrollRef?.current?.scrollTo(0, 9999999);
+                    setTyping(false);
+                },
+            });
         });
-    });
 
     useEffect(() => {
         chatRoomScrollRef?.current?.scrollTo(0, 9999999);
@@ -150,7 +182,7 @@ export default function ChatShow({ user, chats }: { user: UserType; chats: ChatT
             <Head title={`Chat with ${user.name}`} />
             <div className='flex h-[98vh] flex-col justify-between'>
                 <div className='border-b border-r bg-background p-5'>
-                    <ChatTopNavigation user={user} />
+                    <ChatTopNavigation user={user} typing={typing} setTyping={setTyping} />
                 </div>
                 <div className='simple-scrollbar flex-1 space-y-2 overflow-y-auto px-5 py-2' ref={chatRoomScrollRef}>
                     {chats.length ? (
@@ -160,7 +192,7 @@ export default function ChatShow({ user, chats }: { user: UserType; chats: ChatT
                                 className={cn('relative flex', sts(auth.user.id, chat.sender_id, 'alignment'))}>
                                 <div
                                     className={cn(
-                                        'rounded-lg px-3 py-1 text-sm',
+                                        'max-w-md rounded-lg px-3 py-1 text-sm',
                                         sts(auth.user.id, chat.sender_id, 'background'),
                                     )}>
                                     {chat.message}
@@ -176,7 +208,12 @@ export default function ChatShow({ user, chats }: { user: UserType; chats: ChatT
                     )}
                 </div>
                 <div className='border-t p-2'>
-                    <ChatBottomForm user={user} scrollRef={chatRoomScrollRef} focusRef={messageFocusRef} />
+                    <ChatBottomForm
+                        user={user}
+                        scrollRef={chatRoomScrollRef}
+                        focusRef={messageFocusRef}
+                        onTyping={onTyping}
+                    />
                 </div>
             </div>
         </div>

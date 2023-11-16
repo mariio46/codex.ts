@@ -2,6 +2,7 @@ import * as icons from '@tabler/icons-react';
 
 export interface User {
     id: number;
+    uuid: string;
     name: string;
     fallback: string;
     avatar: string;
