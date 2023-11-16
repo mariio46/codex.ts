@@ -2,24 +2,21 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\RolePermission\HasRoleResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthenticatedUserResoure extends JsonResource
+class UsersGlobalResource extends JsonResource
 {
-    public static $wrap = null;
-
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'name' => firstName($this->name),
+            'uuid' => $this->uuid,
+            'name' => $this->name,
             'username' => $this->username,
-            'fallback' => acronym($this->name),
             'email' => $this->email,
             'avatar' => $this->avatar(),
-            'has_roles' => new HasRoleResource($this),
+            'fallback' => acronym($this->name),
         ];
     }
 }

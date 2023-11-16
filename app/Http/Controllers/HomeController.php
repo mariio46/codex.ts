@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): RedirectResponse
     {
-        return inertia('home/index');
+        return to_route('chats.index');
     }
 }

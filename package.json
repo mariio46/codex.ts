@@ -47,6 +47,8 @@
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
         "cmdk": "^0.2.0",
+        "laravel-echo": "^1.15.3",
+        "pusher-js": "^8.3.0",
         "tailwind-merge": "^2.0.0",
         "tailwindcss-animate": "^1.0.7"
     }

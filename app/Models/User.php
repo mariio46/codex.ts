@@ -3,9 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Interaction\Chat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -16,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'username',
+        'uuid',
         'email',
         'password',
     ];
@@ -30,9 +35,19 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public static function booted()
+    {
+        static::creating(fn (User $user) => $user->uuid = Str::uuid());
+    }
+
     public function getRouteKeyName()
     {
         return 'username';
+    }
+
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Chat::class, 'sender_id');
     }
 
     public function avatar($size = 150): string

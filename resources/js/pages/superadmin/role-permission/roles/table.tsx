@@ -2,7 +2,7 @@ import Pagination from '@/components/pagination';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AuthLayout from '@/layouts/auth-layout';
-import { Link, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import RolePermissionLayout from '../role-permission-layout';
 import { RoleTableOption } from './partials/role-table-option';
 import RoleLayout from './role-layout';

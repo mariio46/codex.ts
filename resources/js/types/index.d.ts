@@ -31,6 +31,12 @@ export interface SessionFlash {
     className?: string;
 }
 
-export type FlashProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
-    session_flash: SessionFlash;
-};
+export interface UserType {
+    id: number;
+    uuid: number | string;
+    name: string;
+    avatar?: string | undefined;
+    fallback?: string | undefined;
+    username: string;
+    email: string;
+}

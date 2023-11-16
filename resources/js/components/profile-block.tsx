@@ -24,7 +24,7 @@ export function ProfileAvatar({ className, children }: PropsWithChildren<{ class
     return <Avatar className={cn(className)}>{children}</Avatar>;
 }
 
-export function ProfileImage({ className, src }: { className?: string; src: string }) {
+export function ProfileImage({ className, src }: { className?: string; src?: string }) {
     return <AvatarImage className={cn(className)} src={src} />;
 }
 
