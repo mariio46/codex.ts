@@ -6,9 +6,10 @@ import { usePage } from '@inertiajs/react';
 import RolePermissionLayout from '../role-permission-layout';
 import { RoleTableOption } from './partials/role-table-option';
 import RoleLayout from './role-layout';
+import { DataRoles } from '@/types/data-roles';
 
 export default function RoleTable() {
-    const { data: roles, meta, links } = usePage<any>().props.roles;
+    const { data: roles, meta, links } = usePage<DataRoles>().props.roles;
     return (
         <>
             <Card>

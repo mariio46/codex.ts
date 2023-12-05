@@ -1,5 +1,13 @@
 import * as icons from '@tabler/icons-react';
 
+interface RolesCheck {
+    superadmin?: boolean;
+    admin?: boolean;
+    operator?: boolean;
+    instructor?: boolean;
+    crew?: boolean;
+}
+
 export interface User {
     id: number;
     uuid: string;
@@ -8,13 +16,7 @@ export interface User {
     avatar: string;
     username: string;
     email: string;
-    has_roles: {
-        superadmin?: boolean;
-        admin?: boolean;
-        operator?: boolean;
-        instructor?: boolean;
-        crew?: boolean;
-    };
+    has_roles: RolesCheck;
     email_verified_at: string;
 }
 

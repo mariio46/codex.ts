@@ -11,15 +11,13 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function table(): Response
+    public function table()
     {
         $roles = Role::query()->oldest()->fastPaginate(10);
 
         return inertia('superadmin/role-permission/roles/table', [
             'roles' => TableRoleResource::collection($roles)->additional([
-                'meta' => [
-                    'has_pages' => $roles->hasPages(),
-                ],
+                'meta' => ['has_pages' => $roles->hasPages()],
             ]),
         ]);
     }
